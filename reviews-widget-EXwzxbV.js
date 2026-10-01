@@ -100,19 +100,19 @@
     dispDist[4] += drift;
     var bars = '';
     for (var s = 5; s >= 1; s--) {
-      bars += '<div class="rw-bar"><span>' + s + '</span><i><span style="width:' + (dispDist[s - 1] / DISPLAY_TOTAL * 100).toFixed(1) + '%"></span></i><em>' + dispDist[s - 1].toLocaleString('ar-SA') + '</em></div>';
+      bars += '<div class="rw-bar"><span>' + s + '</span><i><span style="width:' + (dispDist[s - 1] / DISPLAY_TOTAL * 100).toFixed(1) + '%"></span></i><em>' + dispDist[s - 1] + '</em></div>';
     }
     var photos = [];
     all.forEach(function (r) { (r.images || []).forEach(function (u) { photos.push(u); }); });
     return '<style>' + CSS + '</style><div class="rw-wrap">' +
       '<h2 class="rw-h">' + CFG.title + '</h2>' +
       '<div class="rw-sum"><div class="rw-avg"><b>' + avg.toFixed(1) + '</b>' + stars(avg) +
-      '<small>' + DISPLAY_TOTAL.toLocaleString('ar-SA') + ' تقييم</small><span class="rw-rec">' + rec + '% ينصحون فيه</span></div>' +
+      '<small>' + DISPLAY_TOTAL + ' تقييم</small><span class="rw-rec">' + rec + '% ينصحون فيه</span></div>' +
       '<div class="rw-bars">' + bars + '</div></div>' +
       (photos.length ? '<div class="rw-photos">' + photos.slice(0, 20).map(function (u) {
         return '<img src="' + esc(u) + '" alt="" loading="lazy" data-rw-full="' + esc(u) + '">';
       }).join('') + '</div>' : '') +
-      '<div class="rw-bar-top"><span>' + DISPLAY_TOTAL.toLocaleString('ar-SA') + ' تعليق</span><select aria-label="ترتيب حسب" data-rw-sort>' +
+      '<div class="rw-bar-top"><span>' + DISPLAY_TOTAL + ' تعليق</span><select aria-label="ترتيب حسب" data-rw-sort>' +
       '<option value="latest">الأحدث</option><option value="most_helpful">الأكثر إفادة</option>' +
       '<option value="images">بالصور</option><option value="oldest">الأقدم</option></select></div>' +
       '<div data-rw-list></div><button class="rw-more" type="button" data-rw-more>عرض المزيد</button></div>';
