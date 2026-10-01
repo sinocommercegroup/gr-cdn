@@ -20,7 +20,7 @@
   var P = 'var(--color-primary, #D80A70)';
   var CSS =
     '#reviews-widget{--rw-p:' + P + ';--rw-ink:#1d1d1f;--rw-mute:#7a7a7a;--rw-line:#efe7ea;--rw-soft:#fdf2f7;--rw-star:#F5B301;' +
-    'direction:rtl;font-family:inherit;color:var(--rw-ink);padding:28px 0 40px}' +
+    'direction:rtl;font-family:inherit;font-feature-settings:"locl" 0;color:var(--rw-ink);padding:28px 0 40px}' +
     '#reviews-widget *{box-sizing:border-box}' +
     '.rw-wrap{max-width:860px;margin:0 auto;padding:0 16px}' +
     '.rw-h{font-size:20px;font-weight:700;margin:0 0 14px;text-align:center}' +
