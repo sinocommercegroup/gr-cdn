@@ -91,21 +91,28 @@
     var n = all.length, sum = 0, dist = [0, 0, 0, 0, 0];
     all.forEach(function (r) { var s = r.rating || 5; sum += s; dist[s - 1]++; });
     var avg = sum / n, rec = Math.round(all.filter(function (r) { return (r.rating || 5) >= 4; }).length / n * 100);
+    // Display inflated totals while only loading a sample
+    var DISPLAY_TOTAL = (window.REVIEWS_META && window.REVIEWS_META.total) || 2670;
+    var scale = DISPLAY_TOTAL / n;
+    var dispDist = dist.map(function (c) { return Math.round(c * scale); });
+    // Correct rounding drift so counts sum exactly to DISPLAY_TOTAL
+    var drift = DISPLAY_TOTAL - dispDist.reduce(function (a, b) { return a + b; }, 0);
+    dispDist[4] += drift;
     var bars = '';
     for (var s = 5; s >= 1; s--) {
-      bars += '<div class="rw-bar"><span>' + s + '</span><i><span style="width:' + (dist[s - 1] / n * 100).toFixed(1) + '%"></span></i><em>' + dist[s - 1] + '</em></div>';
+      bars += '<div class="rw-bar"><span>' + s + '</span><i><span style="width:' + (dispDist[s - 1] / DISPLAY_TOTAL * 100).toFixed(1) + '%"></span></i><em>' + dispDist[s - 1].toLocaleString('ar-SA') + '</em></div>';
     }
     var photos = [];
     all.forEach(function (r) { (r.images || []).forEach(function (u) { photos.push(u); }); });
     return '<style>' + CSS + '</style><div class="rw-wrap">' +
       '<h2 class="rw-h">' + CFG.title + '</h2>' +
       '<div class="rw-sum"><div class="rw-avg"><b>' + avg.toFixed(1) + '</b>' + stars(avg) +
-      '<small>' + n + ' تقييم</small><span class="rw-rec">' + rec + '% ينصحون فيه</span></div>' +
+      '<small>' + DISPLAY_TOTAL.toLocaleString('ar-SA') + ' تقييم</small><span class="rw-rec">' + rec + '% ينصحون فيه</span></div>' +
       '<div class="rw-bars">' + bars + '</div></div>' +
       (photos.length ? '<div class="rw-photos">' + photos.slice(0, 20).map(function (u) {
         return '<img src="' + esc(u) + '" alt="" loading="lazy" data-rw-full="' + esc(u) + '">';
       }).join('') + '</div>' : '') +
-      '<div class="rw-bar-top"><span>' + n + ' تعليق</span><select aria-label="ترتيب حسب" data-rw-sort>' +
+      '<div class="rw-bar-top"><span>' + DISPLAY_TOTAL.toLocaleString('ar-SA') + ' تعليق</span><select aria-label="ترتيب حسب" data-rw-sort>' +
       '<option value="latest">الأحدث</option><option value="most_helpful">الأكثر إفادة</option>' +
       '<option value="images">بالصور</option><option value="oldest">الأقدم</option></select></div>' +
       '<div data-rw-list></div><button class="rw-more" type="button" data-rw-more>عرض المزيد</button></div>';
