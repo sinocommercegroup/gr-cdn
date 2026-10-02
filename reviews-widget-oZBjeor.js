@@ -92,7 +92,7 @@
     all.forEach(function (r) { var s = r.rating || 5; sum += s; dist[s - 1]++; });
     var avg = sum / n, rec = Math.round(all.filter(function (r) { return (r.rating || 5) >= 4; }).length / n * 100);
     // Display inflated totals while only loading a sample
-    var DISPLAY_TOTAL = (window.REVIEWS_META && window.REVIEWS_META.total) || 2670;
+    var DISPLAY_TOTAL = (window.REVIEWS_META && window.REVIEWS_META.total) || 239;
     var scale = DISPLAY_TOTAL / n;
     var dispDist = dist.map(function (c) { return Math.round(c * scale); });
     // Correct rounding drift so counts sum exactly to DISPLAY_TOTAL
